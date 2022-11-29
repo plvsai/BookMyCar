@@ -11,13 +11,13 @@ public class Complaints {
 
     private @Id
     @GeneratedValue
-     int complaint_id;
+     Long complaint_id;
 
     private int user_id;
 
-    public Complaints(int user_id, int complaint_id) {
+    public Complaints(int user_id) {
         this.user_id = user_id;
-        this.complaint_id = complaint_id;
+
     }
 
     public int getUser_id() {
@@ -29,11 +29,4 @@ public class Complaints {
         this.user_id = user_id;
     }
 
-    public int getComplaint_id() {
-        return complaint_id;
-    }
-
-    public void setComplaint_id(int complaint_id) {
-        this.complaint_id = complaint_id;
-    }
 }

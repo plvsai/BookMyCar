@@ -9,7 +9,7 @@ import javax.persistence.Id;
 public class Booking {
     private @Id
     @GeneratedValue
-    int booking_id;
+    Long booking_id;
     public Booking() {
     }
 

@@ -12,10 +12,9 @@ public class Payment {
     private @Id
     @GeneratedValue
 
-    int payment_id;
+    Long payment_id;
 
-    public Payment(int payment_id, int user_id, String banking_account, String details) {
-        this.payment_id = payment_id;
+    public Payment( int user_id, String banking_account, String details) {
         this.user_id = user_id;
         this.banking_account = banking_account;
         this.details = details;

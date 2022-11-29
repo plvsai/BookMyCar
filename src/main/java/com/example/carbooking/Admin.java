@@ -8,7 +8,7 @@ import javax.persistence.Id;
 public class Admin extends User {
     private @Id
     @GeneratedValue
-    int id;
+    Long id;
 
     public Admin(int user_id, String password, String name, int age, String email_id) {
         super(user_id,password,name,age,email_id);

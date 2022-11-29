@@ -10,7 +10,7 @@ import javax.persistence.Id;
 public class Customer extends User {
     private @Id
     @GeneratedValue
-    int id;
+    Long id;
     private boolean verification_status;
     public Customer(int user_id, String password, String name, int age, String email_id) {
         super(user_id, password, name, age, email_id);

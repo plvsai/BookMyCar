@@ -11,7 +11,7 @@ public class Review {
 
     private @Id
     @GeneratedValue
-
+    Long review_id;
     int booking_id;
     private String review_text;
     private int stars;

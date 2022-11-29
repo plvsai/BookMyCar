@@ -11,8 +11,9 @@ public class Notifier {
 
     private @Id
     @GeneratedValue
+            Long notifier_id;
 
-     int booking_id;
+    int booking_id;
     private int user_id;
 
     public Notifier(int booking_id, int user_id) {

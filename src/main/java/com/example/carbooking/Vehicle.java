@@ -49,7 +49,7 @@ public class Vehicle {
 
 
     public Vehicle(int v_mileage, String v_class, String v_model, String v_manufacturer, int v_capacity, int v_condition, String v_description, boolean v_availability_status) {
-        this.vehicle_id = vehicle_id;
+
         this.v_mileage = v_mileage;
         this.v_class = v_class;
         this.v_model = v_model;

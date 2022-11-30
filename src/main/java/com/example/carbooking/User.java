@@ -1,13 +1,15 @@
 package com.example.carbooking;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
+@Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class User {
     public User() {
     }
-
+    private @Id
+    @GeneratedValue
+    Long id;
     int user_id;
     private String password;
     private String name;
@@ -47,8 +49,7 @@ public class User {
     }
 
 
-    public User(int user_id, String password, String name, int age, String email_id) {
-        this.user_id = user_id;
+    public User( String password, String name, int age, String email_id) {
         this.password = password;
         this.name = name;
         this.age = age;

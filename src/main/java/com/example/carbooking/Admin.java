@@ -10,8 +10,8 @@ public class Admin extends User {
     @GeneratedValue
     Long id;
 
-    public Admin(int user_id, String password, String name, int age, String email_id) {
-        super(user_id,password,name,age,email_id);
+    public Admin( String password, String name, int age, String email_id) {
+        super(password,name,age,email_id);
     }
 
 }

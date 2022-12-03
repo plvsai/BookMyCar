@@ -99,6 +99,14 @@ public class Vehicle {
         return v_manufacturer;
     }
 
+    public String getV_description() {
+        return v_description;
+    }
+
+    public void setV_description(String v_description) {
+        this.v_description = v_description;
+    }
+
     public void setV_manufacturer(String v_manufacturer) {
         this.v_manufacturer = v_manufacturer;
     }

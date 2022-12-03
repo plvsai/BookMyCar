@@ -10,11 +10,20 @@ import javax.persistence.Id;
 public class Customer extends User {
 
     private boolean verification_status;
+
+    public boolean isVerification_status() {
+        return verification_status;
+    }
+
+    public void setVerification_status(boolean verification_status) {
+        this.verification_status = verification_status;
+    }
+
     public Customer(){
 
     }
-    public Customer( String password, String name, int age, String email_id) {
+    public Customer( String password, String name, int age, String email_id,boolean verification_status) {
         super(password, name, age, email_id);
-        verification_status = false;
+        verification_status = verification_status;
     }
 }

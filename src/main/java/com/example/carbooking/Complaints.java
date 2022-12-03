@@ -14,9 +14,18 @@ public class Complaints {
      Long complaint_id;
 
     private int user_id;
+    private String Complaint;
 
-    public Complaints(int user_id) {
-        this.user_id = user_id;
+    public String getComplaint() {
+        return Complaint;
+    }
+
+    public void setComplaint(String complaint) {
+        Complaint = complaint;
+    }
+
+    public Complaints(int user_id,String Complaint) {
+        this.user_id = user_id;this.Complaint=Complaint;
 
     }
 

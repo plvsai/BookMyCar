@@ -1,8 +1,8 @@
-import { Button, Container, Flex, Heading, Input } from "@chakra-ui/react";
+import { Button, Container, Heading, Input } from "@chakra-ui/react";
 import axios from "axios";
 import { useState } from "react";
 
-const LoginPage = ({
+const AdminLoginPage = ({
   setIsLogin,
   setLoggedIn,
   setUserData,
@@ -27,10 +27,10 @@ const LoginPage = ({
   };
   const loginTime = async () => {
     const { data }: any = await axios.get(
-      "http://localhost:8010/proxy/api/customers"
+      "http://localhost:8010/proxy/api/admins"
     );
     const users: Array<{ email_id: string; password: string }> =
-      data._embedded.customers;
+      data._embedded.admins;
     const result = users.find(user => user.email_id === formData.email_id);
     if (!!result) {
       if (result.password === formData.password) {
@@ -43,30 +43,21 @@ const LoginPage = ({
   };
   return (
     <Container>
-      <Heading mb="10px" textAlign="center">
-        User Login
-      </Heading>
+      <Heading>ADMIN LOGIN</Heading>
       <Input name="email_id" onChange={onFormDataChange} placeholder="email" />
       <Input
-        mt="5px"
         name="password"
         onChange={onFormDataChange}
         placeholder="password"
         type="password"
       />
-      <Flex flexDir="column">
-        <Button mt="5px" onClick={() => loginTime()} colorScheme="blackAlpha">
-          Login
-        </Button>
-        <Button
-          mt="5px"
-          colorScheme="twitter"
-          onClick={() => setIsLogin(false)}
-        >
-          Signup
-        </Button>
-      </Flex>
+      <Button onClick={() => loginTime()} colorScheme="blackAlpha">
+        Login
+      </Button>
+      {/* <Button colorScheme="twitter" onClick={() => setIsLogin(false)}>
+        Signup
+      </Button> */}
     </Container>
   );
 };
-export default LoginPage;
+export default AdminLoginPage;

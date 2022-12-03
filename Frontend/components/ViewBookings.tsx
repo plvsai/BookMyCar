@@ -1,10 +1,20 @@
-import { Box, Button, Heading } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Flex,
+  Heading,
+  Table,
+  Th,
+  Tr,
+  useToast,
+} from "@chakra-ui/react";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
 const ViewBookings = ({ setComponentName, user }: any) => {
   const [bookings, setBookings] = useState([]);
   const [reRender, setRerender] = useState(false);
+  const toast = useToast();
   useEffect(() => {
     const getBookings = async () => {
       const { data }: any = await axios.get(
@@ -19,58 +29,73 @@ const ViewBookings = ({ setComponentName, user }: any) => {
     };
     getBookings();
   }, [reRender]);
-  const delBooking = async (id: any) => {
+  const delBooking = async (id: any, vehicle_id: any) => {
     const { data }: any = await axios.delete(
       `http://localhost:8010/proxy/api/bookings/${id}`
     );
     console.log({ data });
+    const response = await axios.patch(
+      `http://localhost:8010/proxy/api/vehicles/${vehicle_id}`,
+      {
+        v_availability_status: true,
+      }
+    );
+    toast({ title: "Success" });
+
     setRerender(!reRender);
   };
   return (
     <>
-      <Button colorScheme="twitter" onClick={() => setComponentName("home")}>
-        Go Back
-      </Button>
       <Heading>User Bookings</Heading>
       <Box>
-        <table>
-          <tr>
-            <th style={{ border: "1px solid black" }}>vehicle_id</th>
-            <th style={{ border: "1px solid black" }}>booking_start_date</th>
-            <th style={{ border: "1px solid black" }}>booking_end_date</th>
-            <th style={{ border: "1px solid black" }}>cost</th>
-            <th style={{ border: "1px solid black" }}>Status</th>
-            <th style={{ border: "1px solid black" }}>Actions</th>
-          </tr>
+        <Table>
+          <Tr>
+            <Th style={{ border: "1px solid black" }}>vehicle_id</Th>
+            <Th style={{ border: "1px solid black" }}>booking_start_date</Th>
+            <Th style={{ border: "1px solid black" }}>booking_end_date</Th>
+            <Th style={{ border: "1px solid black" }}>cost</Th>
+            <Th style={{ border: "1px solid black" }}>Status</Th>
+            <Th style={{ border: "1px solid black" }}>Actions</Th>
+          </Tr>
           {bookings.map((booking: any, id) => (
-            <tr key={id}>
-              <th style={{ border: "1px solid black" }}>
+            <Tr key={id}>
+              <Th style={{ border: "1px solid black" }}>
                 {booking.vehicle_id}
-              </th>
-              <th style={{ border: "1px solid black" }}>
+              </Th>
+              <Th style={{ border: "1px solid black" }}>
                 {booking.booking_start_date}
-              </th>
-              <th style={{ border: "1px solid black" }}>
+              </Th>
+              <Th style={{ border: "1px solid black" }}>
                 {booking.booking_end_date}
-              </th>
-              <th style={{ border: "1px solid black" }}>{booking.cost}</th>
-              <th style={{ border: "1px solid black" }}>{booking.status}</th>
-              <th style={{ border: "1px solid black" }}>
+              </Th>
+              <Th style={{ border: "1px solid black" }}>{booking.cost}</Th>
+              <Th style={{ border: "1px solid black" }}>{booking.status}</Th>
+              <Th style={{ border: "1px solid black" }}>
                 <Button
                   colorScheme="red"
                   onClick={() => {
                     const bookingId = booking._links.booking.href
                       .split("/")
                       .at(-1);
-                    delBooking(bookingId);
+                    delBooking(bookingId, booking.vehicle_id);
                   }}
                 >
                   Cancel
                 </Button>
-              </th>
-            </tr>
+              </Th>
+            </Tr>
           ))}
-        </table>
+        </Table>
+        <Flex justify="center" align="center">
+          <Button
+            width="100%"
+            mt="5px"
+            colorScheme="twitter"
+            onClick={() => setComponentName("home")}
+          >
+            Go Back
+          </Button>
+        </Flex>
       </Box>
     </>
   );

@@ -1,4 +1,5 @@
 //npx lcp --proxyUrl http://localhost:8080
+import { Flex } from "@chakra-ui/react";
 import { ClientRequest } from "http";
 import { NextPage } from "next";
 import { useEffect, useState } from "react";
@@ -23,17 +24,21 @@ const Home: NextPage = () => {
   if (!loggedIn) {
     if (isLogin)
       return (
-        <LoginPage
-          setIsLogin={setIsLogin}
-          setLoggedIn={setLoggedIn}
-          setUserData={setUserData}
-        />
+        <Flex justify="center" align="center" minH="50vh">
+          <LoginPage
+            setIsLogin={setIsLogin}
+            setLoggedIn={setLoggedIn}
+            setUserData={setUserData}
+          />
+        </Flex>
       );
     else return <Signup setIsLogin={setIsLogin} />;
   }
   return (
     <>
-      <HomePage user={userData} />
+      <Flex align="center" minH="50vh">
+        <HomePage user={userData} />
+      </Flex>
     </>
   );
 };

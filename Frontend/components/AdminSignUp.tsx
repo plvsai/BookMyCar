@@ -1,19 +1,19 @@
+import { useState } from "react";
 import { Button, Container, Input } from "@chakra-ui/react";
 import axios from "axios";
-import { useState } from "react";
+import React from "react";
 
-const Signup = ({ setIsLogin }: { setIsLogin: Function }) => {
+const AdminSignup = ({ setIsLogin }: { setIsLogin: Function }) => {
   const [formData, setFormData] = useState({
     email_id: "",
     password: "",
-
     name: "",
     age: 0,
   });
   const createUser = async () => {
     console.log({ formData });
     const Response = await axios.post(
-      "http://localhost:8010/proxy/api/customers",
+      "http://localhost:8010/proxy/api/adminss",
       formData
     );
     console.log({ Response });
@@ -66,4 +66,4 @@ const Signup = ({ setIsLogin }: { setIsLogin: Function }) => {
     </Container>
   );
 };
-export default Signup;
+export default AdminSignup;

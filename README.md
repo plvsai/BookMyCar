@@ -1,9 +1,9 @@
 # BookMyCar
-Car Booking Application.
+This is a prototype of Car Booking Application made for university project.
 
-DB = MySQL
-RESR_API = SpringBoot
-Interface = ReactJS
+- DB = MySQL
+- RESR_API = SpringBoot
+- Interface = ReactJS
 
 go to Interface and run 
 ````yarn dev````

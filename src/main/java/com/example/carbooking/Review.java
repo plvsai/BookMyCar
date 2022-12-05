@@ -24,6 +24,14 @@ public class Review {
         this.attachments = attachments;
     }
 
+    public int getBooking_id() {
+        return booking_id;
+    }
+
+    public void setBooking_id(int booking_id) {
+        this.booking_id = booking_id;
+    }
+
     public String getReview_text() {
         return review_text;
     }

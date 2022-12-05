@@ -1,9 +1,24 @@
-import { Box, Button, Container, Input, Select, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Container,
+  Flex,
+  Input,
+  Select,
+  Table,
+  Text,
+  Th,
+  toast,
+  Tr,
+  useToast,
+} from "@chakra-ui/react";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
 const EditVehicle = ({ setComponentName }: any) => {
+  const toast = useToast();
   const [allVehciles, setAllVehicles] = useState([]);
+  const [reRender, setReRender] = useState(false);
   const [isEditMode, setEditMode] = useState(false);
   const [carId, setCarId] = useState(0);
   const [vehicleData, setVehicleData] = useState({
@@ -26,6 +41,19 @@ const EditVehicle = ({ setComponentName }: any) => {
       [target.name]: target.value,
     });
   };
+  const moveToDelete = async (vehicle: any) => {
+    const carid = vehicle._links.vehicle.href.split("/").at(-1);
+    try {
+      const response = await axios.delete(
+        `http://localhost:8010/proxy/api/vehicles/${carid}`
+      );
+      console.log({ response });
+      toast({ title: "Success" });
+      setReRender(!reRender);
+    } catch (x) {
+      toast({ title: "Error", status: "error" });
+    }
+  };
   useEffect(() => {
     const getVehicles = async () => {
       const { data }: any = await axios.get(
@@ -35,7 +63,7 @@ const EditVehicle = ({ setComponentName }: any) => {
       setAllVehicles(vehicles);
     };
     getVehicles();
-  }, [isEditMode]);
+  }, [isEditMode, reRender]);
   const moveToEdit = (gaddi: any) => {
     const carid = gaddi._links.vehicle.href.split("/").at(-1);
     setCarId(carid);
@@ -130,53 +158,84 @@ const EditVehicle = ({ setComponentName }: any) => {
   return (
     <Container>
       <Box>
-        <table>
-          <tr>
-            <th style={{ border: "1px solid black" }}>v_mileage</th>
-            <th style={{ border: "1px solid black" }}>v_class</th>
-            <th style={{ border: "1px solid black" }}>v_model</th>
-            <th style={{ border: "1px solid black" }}>v_manufacturer</th>
-            <th style={{ border: "1px solid black" }}>v_capacity</th>
-            <th style={{ border: "1px solid black" }}>v_condition</th>
-            <th style={{ border: "1px solid black" }}>v_description</th>
-            <th style={{ border: "1px solid black" }}>v_availability_status</th>
-            <th style={{ border: "1px solid black" }}>Actions</th>
-          </tr>
+        <Table>
+          <Tr>
+            <Th bg="blue.500" color="white" border="1px solid black">
+              Mileage
+            </Th>
+            <Th bg="blue.500" color="white" border="1px solid black">
+              Class
+            </Th>
+            <Th bg="blue.500" color="white" border="1px solid black">
+              Model
+            </Th>
+            <Th bg="blue.500" color="white" border="1px solid black">
+              Manufacturer
+            </Th>
+            <Th bg="blue.500" color="white" border="1px solid black">
+              Capacity
+            </Th>
+            <Th bg="blue.500" color="white" border="1px solid black">
+              Condition
+            </Th>
+            <Th bg="blue.500" color="white" border="1px solid black">
+              Description
+            </Th>
+            <Th bg="blue.500" color="white" border="1px solid black">
+              Availability_status
+            </Th>
+            <Th bg="blue.500" color="white" border="1px solid black">
+              Actions
+            </Th>
+          </Tr>
           {allVehciles.map((vehicle: any, id) => (
-            <tr key={id}>
-              <th style={{ border: "1px solid black" }}>{vehicle.v_mileage}</th>
-              <th style={{ border: "1px solid black" }}>{vehicle.v_class}</th>
-              <th style={{ border: "1px solid black" }}>{vehicle.v_model}</th>
-              <th style={{ border: "1px solid black" }}>
+            <Tr key={id}>
+              <Th style={{ border: "1px solid black" }}>{vehicle.v_mileage}</Th>
+              <Th style={{ border: "1px solid black" }}>{vehicle.v_class}</Th>
+              <Th style={{ border: "1px solid black" }}>{vehicle.v_model}</Th>
+              <Th style={{ border: "1px solid black" }}>
                 {vehicle.v_manufacturer}
-              </th>
-              <th style={{ border: "1px solid black" }}>
+              </Th>
+              <Th style={{ border: "1px solid black" }}>
                 {vehicle.v_capacity}
-              </th>
-              <th style={{ border: "1px solid black" }}>
+              </Th>
+              <Th style={{ border: "1px solid black" }}>
                 {vehicle.v_condition}
-              </th>
-              <th style={{ border: "1px solid black" }}>
+              </Th>
+              <Th style={{ border: "1px solid black" }}>
                 {vehicle.v_description}
-              </th>
-              <th style={{ border: "1px solid black" }}>
+              </Th>
+              <Th style={{ border: "1px solid black" }}>
                 {vehicle.v_availability_status ? "YES" : "NO"}
-              </th>
-              <th style={{ border: "1px solid black" }}>
-                {
-                  <Button
-                    colorScheme="twitter"
-                    onClick={() => moveToEdit(vehicle)}
-                  >
-                    Edit
-                  </Button>
-                }
-              </th>
-            </tr>
+              </Th>
+              <Th style={{ border: "1px solid black" }}>
+                <Flex p={4}>
+                  {
+                    <Button
+                      colorScheme="twitter"
+                      onClick={() => moveToEdit(vehicle)}
+                    >
+                      Edit
+                    </Button>
+                  }
+                  {
+                    <Button
+                      colorScheme="red"
+                      ml={2}
+                      onClick={() => moveToDelete(vehicle)}
+                    >
+                      Delete
+                    </Button>
+                  }
+                </Flex>
+              </Th>
+            </Tr>
           ))}
-        </table>
+        </Table>
       </Box>
-      <Button onClick={() => setComponentName("home")}>Go Back</Button>
+      <Button mt={2} onClick={() => setComponentName("home")}>
+        Go Back
+      </Button>
     </Container>
   );
 };

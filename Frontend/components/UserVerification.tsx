@@ -1,5 +1,5 @@
 //@ts-nocheck
-import { Button, Container, Heading } from "@chakra-ui/react";
+import { Button, Container, Heading, Table, Th, Tr } from "@chakra-ui/react";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
@@ -30,27 +30,27 @@ const UserVerification = ({ setComponentName }: any) => {
     <Container>
       <Heading>User Verification Portal</Heading>
 
-      <table>
-        <tr>
-          <th style={{ border: "1px solid black" }}>Name</th>
-          <th style={{ border: "1px solid black" }}>Email</th>
-          <th style={{ border: "1px solid black" }}>Age</th>
-          <th style={{ border: "1px solid black" }}>Action</th>
-        </tr>
+      <Table>
+        <Tr>
+          <Th style={{ border: "1px solid black" }}>Name</Th>
+          <Th style={{ border: "1px solid black" }}>Email</Th>
+          <Th style={{ border: "1px solid black" }}>Age</Th>
+          <Th style={{ border: "1px solid black" }}>Action</Th>
+        </Tr>
         {users.map(
           usr =>
             !usr.verification_status && (
-              <tr>
-                <th style={{ border: "1px solid black" }}>{usr.email_id}</th>
-                <th style={{ border: "1px solid black" }}>{usr.name}</th>
-                <th style={{ border: "1px solid black" }}>{usr.age}</th>
-                <th style={{ border: "1px solid black" }}>
+              <Tr>
+                <Th style={{ border: "1px solid black" }}>{usr.email_id}</Th>
+                <Th style={{ border: "1px solid black" }}>{usr.name}</Th>
+                <Th style={{ border: "1px solid black" }}>{usr.age}</Th>
+                <Th style={{ border: "1px solid black" }}>
                   <Button onClick={() => verifyUser(usr)}>Verify</Button>
-                </th>
-              </tr>
+                </Th>
+              </Tr>
             )
         )}
-      </table>
+      </Table>
       <Button
         colorScheme="twitter"
         onClick={() => {

@@ -1,4 +1,5 @@
-import { Button, Container } from "@chakra-ui/react";
+//@ts-nocheck
+import { Button, Container, Heading, Table, Th, Tr } from "@chakra-ui/react";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
@@ -16,19 +17,26 @@ const ViewComplaints = ({ setComponentName }: any) => {
   }, []);
   return (
     <Container>
-      <table>
-        <tr>
-          <th style={{ border: "1px solid black" }}>User ID</th>
-          <th style={{ border: "1px solid black" }}>Complaint</th>
-        </tr>
+      <Heading my={5}>Complaints Section</Heading>
+      <Table>
+        <Tr>
+          <Th color="blue.500" style={{ border: "1px solid black" }}>
+            User ID
+          </Th>
+          <Th color="blue.500" style={{ border: "1px solid black" }}>
+            Complaint
+          </Th>
+        </Tr>
         {complaints.map(comp => (
-          <tr>
-            <th style={{ border: "1px solid black" }}>{comp.user_id}</th>
-            <th style={{ border: "1px solid black" }}>{comp.complaint}</th>
-          </tr>
+          <Tr>
+            <Th style={{ border: "1px solid black" }}>{comp.user_id}</Th>
+            <Th style={{ border: "1px solid black" }}>{comp.complaint}</Th>
+          </Tr>
         ))}
-      </table>
-      <Button onClick={() => setComponentName("home")}>Back</Button>
+      </Table>
+      <Button mt={2} onClick={() => setComponentName("home")}>
+        Back
+      </Button>
     </Container>
   );
 };

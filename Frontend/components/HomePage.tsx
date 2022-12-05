@@ -56,6 +56,14 @@ const HomePage = ({ user }: any) => {
                     {user.age}
                   </Text>
                 </Box>
+                <Box>
+                  <Heading size="xs" textTransform="uppercase">
+                    Verification Status
+                  </Heading>
+                  <Text pt="2" fontSize="sm">
+                    {user.verification_status ? "Verified" : "Pending"}
+                  </Text>
+                </Box>
               </Stack>
             </CardBody>
           </Card>
@@ -67,27 +75,31 @@ const HomePage = ({ user }: any) => {
             >
               Update Profile
             </Button>
-            <Button
-              onClick={() => setComponentName("book")}
-              mt="2px"
-              colorScheme="twitter"
-            >
-              Book Car
-            </Button>
-            <Button
-              onClick={() => setComponentName("view")}
-              mt="2px"
-              colorScheme="twitter"
-            >
-              View Bookings
-            </Button>
-            <Button
-              onClick={() => setComponentName("addc")}
-              mt="2px"
-              colorScheme="twitter"
-            >
-              Complaint
-            </Button>
+            {user.verification_status && (
+              <>
+                <Button
+                  onClick={() => setComponentName("book")}
+                  mt="2px"
+                  colorScheme="twitter"
+                >
+                  Book Car
+                </Button>
+                <Button
+                  onClick={() => setComponentName("view")}
+                  mt="2px"
+                  colorScheme="twitter"
+                >
+                  View Bookings
+                </Button>
+                <Button
+                  onClick={() => setComponentName("addc")}
+                  mt="2px"
+                  colorScheme="twitter"
+                >
+                  Complaint
+                </Button>
+              </>
+            )}
             <Button
               onClick={() => Router.reload()}
               mt="2px"

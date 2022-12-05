@@ -1,33 +1,35 @@
 import {
   Button,
   Container,
+  Heading,
   Input,
   toast,
-  useTab,
   useToast,
 } from "@chakra-ui/react";
 import axios from "axios";
 import { useState } from "react";
 
-const Signup = ({ setIsLogin }: { setIsLogin: Function }) => {
+const AddAdmin = ({ setComponentName }: any) => {
   const toast = useToast();
   const [formData, setFormData] = useState({
     email_id: "",
     password: "",
+
     name: "",
     age: 0,
   });
   const createUser = async () => {
-    console.log({ formData });
     try {
+      console.log({ formData });
       const Response = await axios.post(
-        "http://localhost:8010/proxy/api/customers",
+        "http://localhost:8010/proxy/api/admins",
         formData
       );
-      toast({ title: "user created" });
+      toast({ title: "ADMIN CREATED" });
+      setComponentName("home");
       console.log({ Response });
     } catch (x) {
-      toast({ title: "error", status: "error" });
+      toast({ title: x, status: "error" });
     }
   };
   const onFormDataChange = ({
@@ -42,6 +44,7 @@ const Signup = ({ setIsLogin }: { setIsLogin: Function }) => {
   };
   return (
     <Container>
+      <Heading>Create Admin</Heading>
       <Input
         onChange={onFormDataChange}
         name="email_id"
@@ -69,13 +72,22 @@ const Signup = ({ setIsLogin }: { setIsLogin: Function }) => {
         type="number"
         value={formData.age}
       />
-      <Button colorScheme="blackAlpha" onClick={() => createUser()}>
-        Signup
+      <Button
+        width="100%"
+        colorScheme="blackAlpha"
+        onClick={() => createUser()}
+      >
+        Create Admin
       </Button>
-      <Button colorScheme="twitter" onClick={() => setIsLogin(true)}>
-        Login
+      <Button
+        width="100%"
+        mt="5px"
+        colorScheme="twitter"
+        onClick={() => setComponentName("home")}
+      >
+        Go Back
       </Button>
     </Container>
   );
 };
-export default Signup;
+export default AddAdmin;

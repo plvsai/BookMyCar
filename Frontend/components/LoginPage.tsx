@@ -1,5 +1,14 @@
-import { Button, Container, Flex, Heading, Input } from "@chakra-ui/react";
+import {
+  Button,
+  Container,
+  Flex,
+  Heading,
+  Input,
+  toast,
+  useToast,
+} from "@chakra-ui/react";
 import axios from "axios";
+import Router from "next/router";
 import { useState } from "react";
 
 const LoginPage = ({
@@ -11,6 +20,7 @@ const LoginPage = ({
   setLoggedIn: Function;
   setUserData: Function;
 }) => {
+  const toast = useToast();
   const [formData, setFormData] = useState({
     email_id: "",
     password: "",
@@ -36,7 +46,11 @@ const LoginPage = ({
       if (result.password === formData.password) {
         setUserData(result);
         setLoggedIn(true);
+      } else {
+        toast({ title: "Invalid Email/Pass", status: "error" });
       }
+    } else {
+      toast({ title: "Invalid Email/Pass", status: "error" });
     }
     console.log({ result });
     // console.log({ users });
@@ -64,6 +78,13 @@ const LoginPage = ({
           onClick={() => setIsLogin(false)}
         >
           Signup
+        </Button>
+        <Button
+          mt="5px"
+          colorScheme="blackAlpha"
+          onClick={() => Router.push("/admin")}
+        >
+          Admin Login
         </Button>
       </Flex>
     </Container>

@@ -109,8 +109,14 @@ const AddVehicle = ({ setComponentName }: any) => {
         <option value="0">FALSE</option>
         <option value="1">TRUE</option>
       </Select>
-      <Button onClick={() => AddGaddi()}> Add Vehicle</Button>
-      <Button onClick={() => setComponentName("home")}> Go Back</Button>
+      <Button colorScheme="twitter" mt={2} onClick={() => AddGaddi()}>
+        {" "}
+        Add Vehicle
+      </Button>
+      <Button ml={2} mt={2} onClick={() => setComponentName("home")}>
+        {" "}
+        Go Back
+      </Button>
     </Container>
   );
 };

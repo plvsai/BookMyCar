@@ -1,4 +1,4 @@
-import { Container } from "@chakra-ui/react";
+import { Container, Flex } from "@chakra-ui/react";
 import { useState } from "react";
 import AdminHomePage from "../components/AdminHome";
 import AdminLoginPage from "../components/AdminLogin";
@@ -10,11 +10,13 @@ const Admin = () => {
   if (!loggedIn) {
     if (isLogin)
       return (
-        <AdminLoginPage
-          setIsLogin={setIsLogin}
-          setLoggedIn={setLoggedIn}
-          setUserData={setUserData}
-        />
+        <Flex justify="center" align="center" minH="50vh">
+          <AdminLoginPage
+            setIsLogin={setIsLogin}
+            setLoggedIn={setLoggedIn}
+            setUserData={setUserData}
+          />
+        </Flex>
       );
     // else return <Signup setIsLogin={setIsLogin} />;
   }

@@ -1,5 +1,6 @@
-import { Button, Container, Heading, Input } from "@chakra-ui/react";
+import { Button, Container, Heading, Input, useToast } from "@chakra-ui/react";
 import axios from "axios";
+import Router from "next/router";
 import { useState } from "react";
 
 const AdminLoginPage = ({
@@ -11,6 +12,7 @@ const AdminLoginPage = ({
   setLoggedIn: Function;
   setUserData: Function;
 }) => {
+  const toast = useToast();
   const [formData, setFormData] = useState({
     email_id: "",
     password: "",
@@ -36,23 +38,36 @@ const AdminLoginPage = ({
       if (result.password === formData.password) {
         setUserData(result);
         setLoggedIn(true);
+      } else {
+        toast({ title: "Invalid Email/Pass", status: "error" });
       }
+    } else {
+      toast({ title: "Invalid Email/Pass", status: "error" });
     }
     console.log({ result });
     // console.log({ users });
   };
   return (
     <Container>
-      <Heading>ADMIN LOGIN</Heading>
+      <Heading mb={5}>Admin Login</Heading>
       <Input name="email_id" onChange={onFormDataChange} placeholder="email" />
       <Input
+        mt={2}
         name="password"
         onChange={onFormDataChange}
         placeholder="password"
         type="password"
       />
-      <Button onClick={() => loginTime()} colorScheme="blackAlpha">
+      <Button mt={5} onClick={() => loginTime()} colorScheme="blackAlpha">
         Login
+      </Button>
+      <Button
+        ml="5px"
+        mt={5}
+        colorScheme="blackAlpha"
+        onClick={() => Router.push("/")}
+      >
+        User Login
       </Button>
       {/* <Button colorScheme="twitter" onClick={() => setIsLogin(false)}>
         Signup

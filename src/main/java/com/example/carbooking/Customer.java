@@ -22,8 +22,8 @@ public class Customer extends User {
     public Customer(){
 
     }
-    public Customer( String password, String name, int age, String email_id,boolean verification_status) {
+    public Customer( String password, String name, int age, String email_id) {
         super(password, name, age, email_id);
-        verification_status = verification_status;
+        verification_status = false;
     }
 }

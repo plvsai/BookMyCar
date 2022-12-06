@@ -16,6 +16,6 @@ public class DatabaseLoader implements CommandLineRunner {
 
     @Override
     public void run(String... strings) throws Exception {
-        //this.repository.save(new Vehicle(  14442, "S","2001","Hyundai",4,7,"Elantra",false));
+        this.repository.save(new Vehicle(  14442, "S","2001","Hyundai",4,7,"Elantra",false));
     }
 }

@@ -3,6 +3,7 @@ import {
   Container,
   Divider,
   Heading,
+  Input,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -23,6 +24,7 @@ import { useEffect, useState } from "react";
 const AdminReports = ({ setComponentName }: any) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [allUsers, setAllUsers] = useState([]);
+  const [reason, setReason] = useState("");
   const [reRender, setReRender] = useState(false);
   const [bookings, setBookings] = useState([]);
   const [reviews, setReviews] = useState([]);
@@ -38,7 +40,7 @@ const AdminReports = ({ setComponentName }: any) => {
     name: "",
     age: 0,
   });
-  const delBooking = async (id: any, vehicle_id: any) => {
+  const delBooking = async (id: any, vehicle_id: any, user_id: any) => {
     const { data }: any = await axios.delete(
       `http://localhost:8010/proxy/api/bookings/${id}`
     );
@@ -49,10 +51,18 @@ const AdminReports = ({ setComponentName }: any) => {
         v_availability_status: true,
       }
     );
+    const onemore = await axios.post(
+      "http://localhost:8010/proxy/api/notificationses",
+      {
+        user_id: user_id,
+        title: "Booking Cancelled By An Admin",
+        text: reason,
+      }
+    );
     toast({ title: "Success" });
     getBookings();
   };
-  const completeBook = async (id: any, vehicle_id: any) => {
+  const completeBook = async (id: any, vehicle_id: any, user_id: any) => {
     const { data }: any = await axios.patch(
       `http://localhost:8010/proxy/api/bookings/${id}`,
       {
@@ -64,6 +74,14 @@ const AdminReports = ({ setComponentName }: any) => {
       `http://localhost:8010/proxy/api/vehicles/${vehicle_id}`,
       {
         v_availability_status: true,
+      }
+    );
+    const onemore = await axios.post(
+      "http://localhost:8010/proxy/api/notificationses",
+      {
+        user_id: user_id,
+        title: "Booking Set To Completed By An Admin",
+        text: reason,
       }
     );
     toast({ title: "Success" });
@@ -155,22 +173,46 @@ const AdminReports = ({ setComponentName }: any) => {
             <Divider mb={5} />
             <Table>
               <Tr>
-                <Th color="blue.500" style={{ border: "1px solid black" }}>
+                <Th
+                  bg="blue.500"
+                  color="white"
+                  style={{ border: "1px solid black" }}
+                >
                   vehicle_id
                 </Th>
-                <Th color="blue.500" style={{ border: "1px solid black" }}>
+                <Th
+                  bg="blue.500"
+                  color="white"
+                  style={{ border: "1px solid black" }}
+                >
                   booking start date
                 </Th>
-                <Th color="blue.500" style={{ border: "1px solid black" }}>
+                <Th
+                  bg="blue.500"
+                  color="white"
+                  style={{ border: "1px solid black" }}
+                >
                   booking end date
                 </Th>
-                <Th color="blue.500" style={{ border: "1px solid black" }}>
+                <Th
+                  bg="blue.500"
+                  color="white"
+                  style={{ border: "1px solid black" }}
+                >
                   cost
                 </Th>
-                <Th color="blue.500" style={{ border: "1px solid black" }}>
+                <Th
+                  bg="blue.500"
+                  color="white"
+                  style={{ border: "1px solid black" }}
+                >
                   Status
                 </Th>
-                <Th color="blue.500" style={{ border: "1px solid black" }}>
+                <Th
+                  bg="blue.500"
+                  color="white"
+                  style={{ border: "1px solid black" }}
+                >
                   Actions
                 </Th>
               </Tr>
@@ -221,16 +263,26 @@ const AdminReports = ({ setComponentName }: any) => {
                       </>
                     ) : (
                       <>
+                        <Input
+                          mb={2}
+                          placeholder="Reason Of Cancel/Complete Remarks"
+                          value={reason}
+                          onChange={({ target }) => setReason(target.value)}
+                        />
                         <Button
                           colorScheme="red"
                           onClick={() => {
                             const bookingId = booking._links.booking.href
                               .split("/")
                               .at(-1);
-                            delBooking(bookingId, booking.vehicle_id);
+                            delBooking(
+                              bookingId,
+                              booking.vehicle_id,
+                              booking.user_id
+                            );
                           }}
                         >
-                          Delete
+                          Emergency Cancel
                         </Button>
                         <Button
                           colorScheme="twitter"
@@ -239,7 +291,11 @@ const AdminReports = ({ setComponentName }: any) => {
                             const bookingId = booking._links.booking.href
                               .split("/")
                               .at(-1);
-                            completeBook(bookingId, booking.vehicle_id);
+                            completeBook(
+                              bookingId,
+                              booking.vehicle_id,
+                              booking.user_id
+                            );
                           }}
                         >
                           Set Complete

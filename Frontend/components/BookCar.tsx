@@ -132,6 +132,14 @@ const BookCar = ({ setComponentName, user }: any) => {
           v_availability_status: false,
         }
       );
+      const onemore = await axios.post(
+        "http://localhost:8010/proxy/api/notificationses",
+        {
+          user_id: userId,
+          title: "Car Booked",
+          text: `Vehicle ID: ${carid} booked by you from ${startDate} to ${endDate} for $${cost}`,
+        }
+      );
       toast({ title: "Success" });
       setRerender(!reRender);
     } catch (x) {
@@ -139,7 +147,7 @@ const BookCar = ({ setComponentName, user }: any) => {
     }
   };
   return (
-    <>
+    <Box>
       <Box>
         <Heading>Book A Car</Heading>
         <Flex>
@@ -163,39 +171,57 @@ const BookCar = ({ setComponentName, user }: any) => {
         </Flex>
       </Box>
       <Box>
-        <Table variant="stiped">
-          <Tr>
-            <Th style={{ border: "1px solid black" }}>Mileage</Th>
-            <Th style={{ border: "1px solid black" }}>Class</Th>
-            <Th style={{ border: "1px solid black" }}>Model</Th>
-            <Th style={{ border: "1px solid black" }}>Manufacturer</Th>
-            <Th style={{ border: "1px solid black" }}>Capacity</Th>
-            <Th style={{ border: "1px solid black" }}>Condition</Th>
-            <Th style={{ border: "1px solid black" }}>Description</Th>
-            <Th style={{ border: "1px solid black" }}>Availability_status</Th>
-            <Th style={{ border: "1px solid black" }}>Actions</Th>
-          </Tr>
+        <table>
+          <tr>
+            <th style={{ border: "1px solid black", padding: "10px" }}>
+              Mileage
+            </th>
+            <th style={{ border: "1px solid black", padding: "10px" }}>
+              Class
+            </th>
+            <th style={{ border: "1px solid black", padding: "10px" }}>
+              Model
+            </th>
+            <th style={{ border: "1px solid black", padding: "10px" }}>
+              Manufacturer
+            </th>
+            <th style={{ border: "1px solid black", padding: "10px" }}>
+              Capacity
+            </th>
+            <th style={{ border: "1px solid black", padding: "10px" }}>
+              Condition
+            </th>
+            <th style={{ border: "1px solid black", padding: "10px" }}>
+              Description
+            </th>
+            <th style={{ border: "1px solid black", padding: "10px" }}>
+              Availability_status
+            </th>
+            <th style={{ border: "1px solid black", padding: "10px" }}>
+              Actions
+            </th>
+          </tr>
           {allVehciles.map((vehicle: any, id: any) => (
-            <Tr key={id}>
-              <Th style={{ border: "1px solid black" }}>{vehicle.v_mileage}</Th>
-              <Th style={{ border: "1px solid black" }}>{vehicle.v_class}</Th>
-              <Th style={{ border: "1px solid black" }}>{vehicle.v_model}</Th>
-              <Th style={{ border: "1px solid black" }}>
+            <tr key={id}>
+              <th style={{ border: "1px solid black" }}>{vehicle.v_mileage}</th>
+              <th style={{ border: "1px solid black" }}>{vehicle.v_class}</th>
+              <th style={{ border: "1px solid black" }}>{vehicle.v_model}</th>
+              <th style={{ border: "1px solid black" }}>
                 {vehicle.v_manufacturer}
-              </Th>
-              <Th style={{ border: "1px solid black" }}>
+              </th>
+              <th style={{ border: "1px solid black" }}>
                 {vehicle.v_capacity}
-              </Th>
-              <Th style={{ border: "1px solid black" }}>
+              </th>
+              <th style={{ border: "1px solid black" }}>
                 {vehicle.v_condition}
-              </Th>
-              <Th style={{ border: "1px solid black" }}>
+              </th>
+              <th style={{ border: "1px solid black" }}>
                 {vehicle.v_description}
-              </Th>
-              <Th style={{ border: "1px solid black" }}>
+              </th>
+              <th style={{ border: "1px solid black" }}>
                 {vehicle.v_availability_status ? "YES" : "NO"}
-              </Th>
-              <Th style={{ border: "1px solid black" }}>
+              </th>
+              <th style={{ border: "1px solid black" }}>
                 {vehicle.v_availability_status && (
                   <Button
                     colorScheme="green"
@@ -207,10 +233,10 @@ const BookCar = ({ setComponentName, user }: any) => {
                     Book
                   </Button>
                 )}
-              </Th>
-            </Tr>
+              </th>
+            </tr>
           ))}
-        </Table>
+        </table>
         <Button
           w="100%"
           my={5}
@@ -277,7 +303,7 @@ const BookCar = ({ setComponentName, user }: any) => {
           </ModalFooter>
         </ModalContent>
       </Modal>
-    </>
+    </Box>
   );
 };
 export default BookCar;

@@ -64,6 +64,15 @@ const ViewBookings = ({ setComponentName, user }: any) => {
         v_availability_status: true,
       }
     );
+    const userId = user._links.customer.href.split("/").at(-1);
+    const onemore = await axios.post(
+      "http://localhost:8010/proxy/api/notificationses",
+      {
+        user_id: userId,
+        title: "Booking Cancelled",
+        text: `Booking ID: ${id} Cancelled`,
+      }
+    );
     toast({ title: "Success" });
 
     setRerender(!reRender);
@@ -72,29 +81,83 @@ const ViewBookings = ({ setComponentName, user }: any) => {
     <>
       <Heading>User Bookings</Heading>
       <Box>
-        <Table>
-          <Tr>
-            <Th style={{ border: "1px solid black" }}>vehicle_id</Th>
-            <Th style={{ border: "1px solid black" }}>booking_start_date</Th>
-            <Th style={{ border: "1px solid black" }}>booking_end_date</Th>
-            <Th style={{ border: "1px solid black" }}>cost</Th>
-            <Th style={{ border: "1px solid black" }}>Status</Th>
-            <Th style={{ border: "1px solid black" }}>Actions</Th>
-          </Tr>
+        <table>
+          <tr>
+            <th
+              style={{
+                border: "1px solid black",
+                padding: "10px",
+                backgroundColor: "green",
+                color: "white",
+              }}
+            >
+              vehicle_id
+            </th>
+            <th
+              style={{
+                border: "1px solid black",
+                padding: "10px",
+                backgroundColor: "green",
+                color: "white",
+              }}
+            >
+              booking_start_date
+            </th>
+            <th
+              style={{
+                border: "1px solid black",
+                padding: "10px",
+                backgroundColor: "green",
+                color: "white",
+              }}
+            >
+              booking_end_date
+            </th>
+            <th
+              style={{
+                border: "1px solid black",
+                padding: "10px",
+                backgroundColor: "green",
+                color: "white",
+              }}
+            >
+              cost
+            </th>
+            <th
+              style={{
+                border: "1px solid black",
+                padding: "10px",
+                backgroundColor: "green",
+                color: "white",
+              }}
+            >
+              Status
+            </th>
+            <th
+              style={{
+                border: "1px solid black",
+                padding: "10px",
+                backgroundColor: "green",
+                color: "white",
+              }}
+            >
+              Actions
+            </th>
+          </tr>
           {bookings.map((booking: any, id) => (
-            <Tr key={id}>
-              <Th style={{ border: "1px solid black" }}>
+            <tr key={id}>
+              <th style={{ border: "1px solid black" }}>
                 {booking.vehicle_id}
-              </Th>
-              <Th style={{ border: "1px solid black" }}>
+              </th>
+              <th style={{ border: "1px solid black" }}>
                 {booking.booking_start_date}
-              </Th>
-              <Th style={{ border: "1px solid black" }}>
+              </th>
+              <th style={{ border: "1px solid black" }}>
                 {booking.booking_end_date}
-              </Th>
-              <Th style={{ border: "1px solid black" }}>{booking.cost}</Th>
-              <Th style={{ border: "1px solid black" }}>{booking.status}</Th>
-              <Th style={{ border: "1px solid black" }}>
+              </th>
+              <th style={{ border: "1px solid black" }}>{booking.cost}</th>
+              <th style={{ border: "1px solid black" }}>{booking.status}</th>
+              <th style={{ border: "1px solid black", padding: "20px" }}>
                 {booking.status === "complete" && (
                   <Button
                     colorScheme="twitter"
@@ -119,10 +182,10 @@ const ViewBookings = ({ setComponentName, user }: any) => {
                     Cancel
                   </Button>
                 )}
-              </Th>
-            </Tr>
+              </th>
+            </tr>
           ))}
-        </Table>
+        </table>
         <Flex justify="center" align="center">
           <Button
             width="100%"
